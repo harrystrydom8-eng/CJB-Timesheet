@@ -3,8 +3,8 @@
   "short_name": "CJB Job Cards",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#e8e9f4",
-  "theme_color": "#000099",
+  "background_color": "#e9edf3",
+  "theme_color": "#10243f",
   "icons": [
     {
       "src": "icon-192.png",
