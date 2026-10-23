@@ -12,15 +12,15 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     :root {
-      --ink: #17173a;
-      --muted: #55587a;
-      --line: #cdcfe3;
-      --soft: #f1f1f9;
+      --ink: #1c2939;
+      --muted: #556477;
+      --line: #d5dce6;
+      --soft: #f3f5f8;
       --paper: #ffffff;
-      --page: #e8e9f4;
-      --accent: #2323b5;
-      --pale: #c9caf0;
-      --accent-dark: #000099;
+      --page: #e9edf3;
+      --accent: #f5b324;
+      --pale: #ffe2a0;
+      --accent-dark: #10243f;
       --danger: #b3261e;
       --danger-soft: #fdecea;
       --ok: #1f6b45;
@@ -64,14 +64,8 @@
       text-transform: uppercase;
       margin: 0;
     }
-    .brand-subtitle {
-      font-size: 13px;
-      color: var(--pale);
-      margin: 4px 0 0;
-    }
-    .ref-box {
-      text-align: right;
-    }
+    .brand-subtitle { font-size: 13px; color: var(--pale); margin: 4px 0 0; }
+    .ref-box { text-align: right; }
     .ref-box label { color: var(--pale); font-size: 12px; margin-bottom: 2px; display: block; }
     .ref-box .job-id-display {
       font-family: "IBM Plex Sans Condensed", sans-serif;
@@ -83,14 +77,12 @@
       border-radius: 4px;
       display: inline-block;
     }
-
-    /* Navigation Tabs */
     .nav-bar {
       max-width: 1060px;
       margin: 0 auto 16px;
       display: flex;
       gap: 8px;
-      background: #d8daf0;
+      background: var(--soft);
       padding: 6px;
       border-radius: 6px;
     }
@@ -113,6 +105,7 @@
     }
 
     .app-page { display: none; }
+  .draft-status { margin-right: auto; color: var(--muted); font-size: 12px; }
     .app-page.active-page { display: block; }
 
     section { padding: 24px 32px; border-bottom: 1px solid var(--line); }
@@ -166,13 +159,13 @@
       font: inherit;
       color: var(--ink);
       background: #fff;
-      border: 1px solid #a9aecb;
+      border: 1px solid var(--line);
       border-radius: 4px;
       padding: 8px 10px;
       min-height: 40px;
     }
     input:focus, select:focus, textarea:focus {
-      outline: 3px solid rgba(0, 0, 153, .2);
+      outline: 3px solid rgba(245, 179, 36, .3);
       border-color: var(--accent);
     }
     textarea { resize: vertical; min-height: 80px; }
@@ -234,7 +227,7 @@
 
     /* Signature Canvas Area */
     .sig-container {
-      border: 1px solid #a9aecb;
+      border: 1px solid var(--line);
       border-radius: 4px;
       background: #fff;
       position: relative;
@@ -318,11 +311,191 @@
       line-height: 1.4;
     }
 
+    body { padding: 28px 16px 60px; }
+    .sheet {
+      max-width: 1120px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 8px 28px rgba(16, 36, 63, .08), 0 1px 3px rgba(16, 36, 63, .05);
+    }
+    header.top {
+      background: var(--accent-dark);
+      padding: 24px 36px;
+      border-top: 4px solid var(--accent);
+    }
+    .brand-title {
+      font-size: 24px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .brand-subtitle { color: var(--pale); }
+    .ref-box .job-id-display {
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: 3px;
+      background: rgba(255, 255, 255, .08);
+    }
+    .nav-bar {
+      max-width: 1120px;
+      gap: 0;
+      padding: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+    }
+    .nav-tab {
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      background: transparent;
+      color: var(--muted);
+      transition: color .15s, border-color .15s, background .15s;
+    }
+    .nav-tab:hover { color: var(--accent-dark); background: rgba(255, 255, 255, .55); }
+    .nav-tab.active {
+      background: transparent;
+      color: var(--accent-dark);
+      border-bottom-color: var(--accent);
+    }
+    section { padding: 26px 36px; }
+    h2 {
+      margin-bottom: 20px;
+      color: var(--accent-dark);
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: 16px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    h2 span.step-badge {
+      background: var(--pale);
+      color: var(--accent-dark);
+      border-radius: 3px;
+      font-size: 11px;
+      padding: 4px 8px;
+    }
+    label, .lbl { color: var(--muted); font-weight: 600; }
+    input, select, textarea {
+      border-color: var(--line);
+      border-radius: 3px;
+      min-height: 42px;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(245, 179, 36, .24);
+    }
+    textarea { min-height: 96px; }
+    .excel-table th {
+      background: var(--soft);
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+    .excel-table tbody tr:nth-child(even) { background: #fafcfb; }
+    .excel-table td { padding: 7px 8px; }
+    .sig-container { border-color: var(--line); border-radius: 3px; }
+    .sig-footer { background: var(--soft); }
+    .btn {
+      min-height: 42px;
+      border-radius: 3px;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .btn-primary { background: var(--accent); color: var(--accent-dark); }
+    .btn-primary:hover { background: var(--accent-dark); color: var(--pale); }
+    .btn-secondary { border-color: var(--line); }
+    .btn-secondary:hover { background: var(--soft); }
+    .btn-success { background: #28724f; }
+    .actions-bar { max-width: 1120px; }
+    .draft-status { margin-right: auto; color: var(--muted); font-size: 12px; }
+    .draft-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .draft-controls select { width: auto; min-width: 180px; min-height: 42px; }
+    .risk-groups {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 28px;
+    }
+    .risk-group { border-top: 1px solid var(--line); padding: 16px 0 10px; }
+    .risk-group h3 {
+      margin: 0 0 10px;
+      color: var(--accent-dark);
+      font-size: 14px;
+    }
+    .risk-options { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 16px; }
+    .risk-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin: 0;
+      padding: 7px 0;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.35;
+      cursor: pointer;
+    }
+    .risk-option input[type="checkbox"] {
+      flex: 0 0 17px;
+      width: 17px;
+      min-height: 17px;
+      height: 17px;
+      margin: 1px 0 0;
+      padding: 0;
+      accent-color: var(--accent);
+    }
+    .risk-intro { margin: 0 0 18px; color: var(--muted); }
+    .risk-disclaimer {
+      margin: 0 0 20px;
+      padding: 10px 12px;
+      border-left: 3px solid var(--accent);
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .risk-register { margin-top: 22px; }
+    .risk-register h3 { margin: 0 0 6px; color: var(--accent-dark); font-size: 15px; }
+    .risk-register-intro { margin: 0 0 12px; color: var(--muted); font-size: 12px; }
+    .risk-detail {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 24px;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+    }
+    .risk-detail[hidden] { display: none !important; }
+    .risk-detail-heading { grid-column: 1 / -1; margin: 0; color: var(--accent-dark); font-size: 14px; }
+    .risk-rating {
+      min-width: 0;
+      padding: 12px;
+      background: var(--soft);
+      border-left: 2px solid var(--line);
+    }
+    .risk-rating h4 { margin: 0 0 10px; color: var(--ink); font-size: 12px; }
+    .risk-rating-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .risk-rating-fields label, .risk-field label { font-size: 12px; }
+    .risk-rating select { min-height: 38px; padding: 6px 8px; font-size: 12px; }
+    .risk-score { display: block; margin-top: 10px; font-size: 12px; font-weight: 600; }
+    .risk-controls-field textarea { min-height: 76px; }
+    .risk-empty-state { padding: 12px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    .eq-photo-cell { min-width: 170px; }
+    .eq-photo-input { min-height: 34px; padding: 4px; font-size: 11px; }
+    .eq-photo-preview { display: block; width: 92px; height: 72px; margin-top: 6px; border: 1px solid var(--line); object-fit: contain; background: #fff; }
+    .eq-photo-preview[hidden] { display: none; }
+    .eq-photo-status { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
+
     @media(max-width: 680px) {
       .grid, .grid.three, .grid.four { grid-template-columns: 1fr; }
+      .risk-groups, .risk-options { grid-template-columns: 1fr; }
+      .risk-detail { grid-template-columns: 1fr; }
+      .risk-detail-heading { grid-column: auto; }
       body { padding: 8px 4px 30px; }
       section { padding: 18px 16px; }
       header.top { padding: 18px 16px; }
+      .nav-tab { padding: 10px 8px; font-size: 12px; }
+      .actions-bar { padding: 0 8px; }
+      .draft-status, .draft-controls { flex: 1 0 100%; }
+      .draft-controls select { flex: 1; min-width: 140px; }
+      .draft-status { flex: 1 0 100%; }
     }
 
     /* Print & PDF Export Settings */
@@ -334,15 +507,21 @@
       .sheet { box-shadow: none; border-radius: 0; margin: 0; max-width: 100%; width: 100%; }
       
       input, select, textarea { display: none !important; }
+      .risk-option input[type="checkbox"] { display: inline-block !important; }
       .print-val { display: block !important; }
 
       .excel-table-container { overflow-x: visible !important; }
       .excel-table { min-width: 100% !important; }
       .excel-table th, .excel-table td { padding: 4px 6px !important; font-size: 10px !important; border: 1px solid #000 !important; }
       .excel-table th:last-child, .excel-table td:last-child { display: none !important; }
+      .eq-photo-preview { width: 58px; height: 46px; margin-top: 0; }
+      .eq-photo-status { display: none; }
 
       section { page-break-inside: avoid; padding: 12px 18px; }
-      header.top { background: #000099 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 12px 18px; }
+      #page3 section { page-break-inside: auto; }
+      .risk-detail { break-inside: avoid; }
+      .risk-rating { background: #fff; padding: 6px; }
+      header.top { background: var(--accent-dark) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 12px 18px; }
     }
   </style>
 </head>
@@ -350,8 +529,9 @@
 
   <!-- NAVIGATION TABS -->
   <div class="nav-bar">
-    <button type="button" class="nav-tab active" onclick="switchPage(1)">📄 Page 1: Job Card, Timesheet & Sign-Off</button>
-    <button type="button" class="nav-tab" onclick="switchPage(2)">📊 Page 2: Excel Equipment Spreadsheet</button>
+    <button type="button" class="nav-tab active" onclick="switchPage(1)">Page 1: Job Card & Sign-Off</button>
+    <button type="button" class="nav-tab" onclick="switchPage(2)">Page 2: Equipment Register</button>
+    <button type="button" class="nav-tab" onclick="switchPage(3)">Page 3: Risk Assessment</button>
   </div>
 
   <div class="sheet" id="appSheet">
@@ -473,7 +653,7 @@
 
       <!-- SIGN-OFF SECTION -->
       <div id="certSection" class="cert-locked">
-        <section style="background: #fafafc;">
+        <section style="background: var(--soft);">
           <h2><span class="step-badge">Sign-Off</span> Client Approval & Signatures</h2>
           <div id="page1Alert" style="background: var(--ok-soft); border: 1px solid var(--ok); padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; color: var(--ok); font-weight: 500;">
             ✔ <strong>Equipment Spreadsheet Verified:</strong> All items listed successfully. Sign-off unlocked.
@@ -510,7 +690,7 @@
       </div>
 
       <div style="padding: 20px 32px; text-align: center;">
-        <button type="button" class="btn btn-primary" onclick="switchPage(2)">Proceed to Page 2 (Excel Equipment Spreadsheet) ➔</button>
+        <button type="button" class="btn btn-primary" onclick="switchPage(2)">Continue to Equipment Register</button>
       </div>
     </div>
 
@@ -536,6 +716,8 @@
                 <th>Length / m</th>
                 <th>Chain / Rope Size (mm)</th>
                 <th>No of Legs</th>
+                <th>Remarks</th>
+                <th>Photo</th>
                 <th style="width: 60px; text-align: center;">Action</th>
               </tr>
             </thead>
@@ -546,16 +728,132 @@
         </div>
 
         <div style="margin-top: 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-          <button type="button" class="btn btn-secondary" onclick="addExcelRow()">➕ Add Row</button>
+          <button type="button" class="btn btn-secondary" onclick="addExcelRow()">Add Row</button>
           <div id="spreadsheetStatusBanner" class="status-banner pending" style="margin-top: 0; flex: 1;">
             ⏳ Spreadsheet empty. Please add at least one equipment item.
           </div>
         </div>
       </section>
 
-      <div style="padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; background: var(--soft);">
-        <button type="button" class="btn btn-secondary" onclick="switchPage(1)">⬅ Back to Page 1</button>
-        <button type="button" class="btn btn-primary" onclick="validateAndReturnToPage1()">Save & Return to Page 1 for Sign-Off ➔</button>
+      <div style="padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; background: var(--soft); gap: 12px; flex-wrap: wrap;">
+        <button type="button" class="btn btn-secondary" onclick="switchPage(1)">Back to Page 1</button>
+        <button type="button" class="btn btn-secondary" onclick="switchPage(3)">Continue to Risk Assessment</button>
+        <button type="button" class="btn btn-primary" onclick="validateAndReturnToPage1()">Save & Return for Sign-Off</button>
+      </div>
+    </div>
+
+    <!-- ================= PAGE 3: RISK ASSESSMENT ================= -->
+    <div id="page3" class="app-page">
+      <section>
+        <h2><span class="step-badge">Page 3</span> Site Risk Assessment</h2>
+        <p class="risk-intro">Select applicable hazards, assess the initial risk, record controls and an action owner, then rate the remaining risk.</p>
+        <p class="risk-disclaimer">Indicative guide only: likelihood and consequence are rated 1–5 and multiplied. Confirm rating definitions and risk bands against the site's approved matrix. This checklist does not replace site procedures, permits, or a competent person's assessment.</p>
+
+        <div class="grid three">
+          <div>
+            <label for="riskAssessmentArea">Site / Work Area</label>
+            <div class="input-field-wrapper">
+              <input type="text" id="riskAssessmentArea" placeholder="e.g. Crushing plant, Level 3">
+              <span class="print-val" id="p_riskAssessmentArea">-</span>
+            </div>
+          </div>
+          <div>
+            <label for="riskAssessmentTask">Task / Activity</label>
+            <div class="input-field-wrapper">
+              <input type="text" id="riskAssessmentTask" placeholder="e.g. Inspect lifting equipment">
+              <span class="print-val" id="p_riskAssessmentTask">-</span>
+            </div>
+          </div>
+          <div>
+            <label for="riskAssessmentAssessor">Assessed By</label>
+            <div class="input-field-wrapper">
+              <input type="text" id="riskAssessmentAssessor" placeholder="Name of assessor">
+              <span class="print-val" id="p_riskAssessmentAssessor">-</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="risk-groups">
+          <div class="risk-group">
+            <h3>Ground, Access & Environment</h3>
+            <div class="risk-options">
+              <label class="risk-option"><input type="checkbox" value="Falls from height, open edges or fragile surfaces">Falls from height, open edges or fragile surfaces</label>
+              <label class="risk-option"><input type="checkbox" value="Falling objects or suspended loads">Falling objects or suspended loads</label>
+              <label class="risk-option"><input type="checkbox" value="Slips, trips, uneven ground or poor access">Slips, trips, uneven ground or poor access</label>
+              <label class="risk-option"><input type="checkbox" value="Rockfall, unstable ground or ground movement">Rockfall, unstable ground or ground movement</label>
+              <label class="risk-option"><input type="checkbox" value="Underground ventilation, low oxygen or harmful gases">Underground ventilation, low oxygen or harmful gases</label>
+              <label class="risk-option"><input type="checkbox" value="Water ingress, flooding or work near water">Water ingress, flooding or work near water</label>
+              <label class="risk-option"><input type="checkbox" value="Poor lighting, visibility or adverse weather">Poor lighting, visibility or adverse weather</label>
+            </div>
+          </div>
+
+          <div class="risk-group">
+            <h3>Plant, Machinery & Energy</h3>
+            <div class="risk-options">
+              <label class="risk-option"><input type="checkbox" value="Lifting, rigging or crane operations">Lifting, rigging or crane operations</label>
+              <label class="risk-option"><input type="checkbox" value="Mobile equipment, vehicles or pedestrian traffic">Mobile equipment, vehicles or pedestrian traffic</label>
+              <label class="risk-option"><input type="checkbox" value="Moving machinery, nip points or rotating parts">Moving machinery, nip points or rotating parts</label>
+              <label class="risk-option"><input type="checkbox" value="Stored energy or inadequate isolation / lockout">Stored energy or inadequate isolation / lockout</label>
+              <label class="risk-option"><input type="checkbox" value="Electrical shock, arc flash or overhead power lines">Electrical shock, arc flash or overhead power lines</label>
+              <label class="risk-option"><input type="checkbox" value="Pressurised systems, hydraulics or pneumatics">Pressurised systems, hydraulics or pneumatics</label>
+              <label class="risk-option"><input type="checkbox" value="Confined space entry or restricted access">Confined space entry or restricted access</label>
+            </div>
+          </div>
+
+          <div class="risk-group">
+            <h3>Exposure & Process Hazards</h3>
+            <div class="risk-options">
+              <label class="risk-option"><input type="checkbox" value="Dust, including respirable crystalline silica">Dust, including respirable crystalline silica</label>
+              <label class="risk-option"><input type="checkbox" value="Welding fumes, exhaust, gases or chemical exposure">Welding fumes, exhaust, gases or chemical exposure</label>
+              <label class="risk-option"><input type="checkbox" value="Excessive noise or vibration">Excessive noise or vibration</label>
+              <label class="risk-option"><input type="checkbox" value="Heat, cold, sun exposure or dehydration">Heat, cold, sun exposure or dehydration</label>
+              <label class="risk-option"><input type="checkbox" value="Fire, explosion, flammable material or hot work">Fire, explosion, flammable material or hot work</label>
+              <label class="risk-option"><input type="checkbox" value="Blasting, explosives or misfire area">Blasting, explosives or misfire area</label>
+              <label class="risk-option"><input type="checkbox" value="Spills, leaks or environmental contamination">Spills, leaks or environmental contamination</label>
+            </div>
+          </div>
+
+          <div class="risk-group">
+            <h3>People & Work Practices</h3>
+            <div class="risk-options">
+              <label class="risk-option"><input type="checkbox" value="Manual handling or ergonomic strain">Manual handling or ergonomic strain</label>
+              <label class="risk-option"><input type="checkbox" value="Fatigue, shift work or reduced alertness">Fatigue, shift work or reduced alertness</label>
+              <label class="risk-option"><input type="checkbox" value="Working alone or delayed emergency response">Working alone or delayed emergency response</label>
+              <label class="risk-option"><input type="checkbox" value="Simultaneous work or contractor interface">Simultaneous work or contractor interface</label>
+              <label class="risk-option"><input type="checkbox" value="Biological exposure or poor hygiene facilities">Biological exposure or poor hygiene facilities</label>
+              <label class="risk-option"><input type="checkbox" value="Other site-specific hazard">Other site-specific hazard</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="risk-register">
+          <h3>Hazard Ratings & Controls</h3>
+          <p class="risk-register-intro">Indicative bands: 1–4 Low, 5–9 Moderate, 10–16 High, 17–25 Extreme. Apply the site's approved matrix where it differs.</p>
+          <p id="riskEmptyState" class="risk-empty-state">Select an applicable hazard above to assess its ratings and controls.</p>
+          <div id="riskRegister"></div>
+        </div>
+
+        <div class="grid" style="margin-top: 18px;">
+          <div>
+            <label for="riskControls">General Site Controls / Notes</label>
+            <div class="input-field-wrapper">
+              <textarea id="riskControls" placeholder="Describe isolation, PPE, barriers, permits, monitoring, communication, or other controls..."></textarea>
+              <span class="print-val" id="p_riskControls">-</span>
+            </div>
+          </div>
+          <div>
+            <label for="riskActions">Other Site Notes / Follow-up Actions</label>
+            <div class="input-field-wrapper">
+              <textarea id="riskActions" placeholder="Record hazards not listed, required actions, or items to confirm with the site... "></textarea>
+              <span class="print-val" id="p_riskActions">-</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div style="padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; background: var(--soft); gap: 12px; flex-wrap: wrap;">
+        <button type="button" class="btn btn-secondary" onclick="switchPage(2)">Back to Equipment Register</button>
+        <button type="button" class="btn btn-primary" onclick="switchPage(1)">Return to Job Card</button>
       </div>
     </div>
 
@@ -563,47 +861,68 @@
 
   <!-- ACTION BUTTONS BAR -->
   <div class="actions-bar">
+    <span id="draftStatus" class="draft-status" aria-live="polite">Draft saves in this browser, including signatures.</span>
+    <div class="draft-controls">
+      <label for="savedDraftSelect">Saved jobs</label>
+      <select id="savedDraftSelect" onchange="loadSavedDraft()"></select>
+      <button type="button" class="btn btn-secondary" onclick="startNewDraft()">New Job</button>
+      <button type="button" class="btn btn-secondary" onclick="deleteCurrentDraft()">Delete Draft</button>
+    </div>
     <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset Form</button>
-    <button type="button" class="btn btn-secondary" id="exportExcelBtn">📥 Export to Excel</button>
+    <button type="button" class="btn btn-secondary" id="exportExcelBtn">Export to Excel</button>
     <button type="button" class="btn btn-success" id="submitCloudBtn" onclick="submitToCloud()" disabled>
-      ☁️ Submit to Google Sheet & Email
+      Submit to Google Sheet & Email
     </button>
     <button type="button" class="btn btn-primary" id="printBtn" onclick="printCertificate()" disabled>
-      🖨️ Print / Download PDF Report
+      Print / Download PDF Report
     </button>
   </div>
 
 <script>
   // HERMAN'S GOOGLE APPS SCRIPT WEB APP URL:
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_T5zYd-VlfPMFGnF0Ndf_ucauNUelKsmQihWww1xPpBOT_e8wEIk7zZFlCumLlFkAJg/exec";
+  const DRAFTS_STORAGE_KEY = 'cjb_timesheet_drafts_v1';
+  const ACTIVE_DRAFT_STORAGE_KEY = 'cjb_timesheet_active_draft_v1';
+  const LEGACY_DRAFT_STORAGE_KEY = 'cjb_timesheet_draft_v1';
 
   let isPage2Valid = false;
+  let draftReady = false;
+  let draftSaveTimer = null;
+  let currentDraftId = '';
 
   window.addEventListener('DOMContentLoaded', () => {
+    const activeDraft = loadActiveDraft();
+    currentDraftId = activeDraft.id;
+    const draft = activeDraft.draft;
     document.getElementById('inspectionDate').valueAsDate = new Date();
     loadNextSequence('H');
     updateHeaderProvider();
-    
-    addExcelRow();
+
+    if (draft && Array.isArray(draft.equipmentRows) && draft.equipmentRows.length) {
+      draft.equipmentRows.forEach(() => addExcelRow());
+      restoreEquipmentRows(draft.equipmentRows);
+    } else {
+      addExcelRow();
+    }
     
     initSignatures();
     updateJobIdDisplay();
     evaluateSpreadsheet();
+    initRiskRegister();
+    if (draft) restoreDraft(draft);
+    draftReady = true;
+    setupDraftAutoSave();
+    saveDraft();
+    renderSavedDrafts();
   });
 
   function switchPage(pageNum) {
-    document.getElementById('page1').classList.remove('active-page');
-    document.getElementById('page2').classList.remove('active-page');
+    document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active-page'));
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-
-    if (pageNum === 1) {
-      document.getElementById('page1').classList.add('active-page');
-      document.querySelectorAll('.nav-tab')[0].classList.add('active');
-    } else {
-      document.getElementById('page2').classList.add('active-page');
-      document.querySelectorAll('.nav-tab')[1].classList.add('active');
-    }
+    document.getElementById('page' + pageNum).classList.add('active-page');
+    document.querySelectorAll('.nav-tab')[pageNum - 1].classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    scheduleDraftSave();
   }
 
   function updateHeaderProvider() {
@@ -650,11 +969,27 @@
         <input type="text" class="eq-legs" value="${data.legs || ''}" placeholder="e.g. 2">
         <span class="print-val"></span>
       </td>
+      <td>
+        <input type="text" class="eq-remarks" value="${data.remarks || ''}" placeholder="Inspection notes">
+        <span class="print-val"></span>
+      </td>
+      <td class="eq-photo-cell">
+        <input type="file" class="eq-photo-input" accept="image/*" aria-label="Attach equipment photo">
+        <img class="eq-photo-preview" alt="Equipment photo preview" hidden>
+        <span class="eq-photo-status">No photo attached</span>
+        <span class="eq-photo-print print-val">-</span>
+        <button type="button" class="btn btn-secondary eq-photo-remove" hidden>Remove photo</button>
+      </td>
       <td style="text-align: center;"><button type="button" class="btn-row-del" onclick="deleteExcelRow(this)">X</button></td>
     `;
     tbody.appendChild(tr);
+    tr.dataset.photo = '';
+    tr.querySelector('.eq-photo-input').addEventListener('change', event => handleEquipmentPhotoChange(event.currentTarget, tr));
+    tr.querySelector('.eq-photo-remove').addEventListener('click', () => setEquipmentPhoto(tr, ''));
     updateRowNumbers();
     evaluateSpreadsheet();
+    if (data.photo) setEquipmentPhoto(tr, data.photo);
+    scheduleDraftSave();
   }
 
   function deleteExcelRow(btn) {
@@ -666,6 +1001,7 @@
     btn.closest('tr').remove();
     updateRowNumbers();
     evaluateSpreadsheet();
+    scheduleDraftSave();
   }
 
   function updateRowNumbers() {
@@ -700,6 +1036,52 @@
     }
   }
 
+  function handleEquipmentPhotoChange(input, row) {
+    const file = input.files && input.files[0];
+    const status = row.querySelector('.eq-photo-status');
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      status.textContent = 'Choose an image file.';
+      input.value = '';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onerror = () => { status.textContent = 'Could not read this image.'; };
+    reader.onload = () => {
+      const image = new Image();
+      image.onerror = () => { status.textContent = 'Could not load this image.'; };
+      image.onload = () => {
+        const scale = Math.min(1, 1000 / Math.max(image.naturalWidth, image.naturalHeight));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+        const context = canvas.getContext('2d');
+        context.fillStyle = '#ffffff';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        setEquipmentPhoto(row, canvas.toDataURL('image/jpeg', 0.72));
+      };
+      image.src = String(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function setEquipmentPhoto(row, dataUrl) {
+    const preview = row.querySelector('.eq-photo-preview');
+    const status = row.querySelector('.eq-photo-status');
+    const removeButton = row.querySelector('.eq-photo-remove');
+    const printValue = row.querySelector('.eq-photo-print');
+    row.dataset.photo = dataUrl || '';
+    if (dataUrl) preview.src = dataUrl;
+    else preview.removeAttribute('src');
+    preview.hidden = !dataUrl;
+    removeButton.hidden = !dataUrl;
+    status.textContent = dataUrl ? 'Photo attached' : 'No photo attached';
+    printValue.textContent = dataUrl ? 'Photo attached' : '-';
+    scheduleDraftSave();
+  }
+
   function validateAndReturnToPage1() {
     evaluateSpreadsheet();
     let certSection = document.getElementById('certSection');
@@ -709,22 +1091,27 @@
     let alertBox = document.getElementById('page1Alert');
 
     if (isPage2Valid) {
-      certSection.className = "cert-unlocked";
-      printBtn.disabled = false;
-      submitCloudBtn.disabled = false;
-      statusText.innerText = "Status: Equipment Spreadsheet Verified ✔";
-      alertBox.style.display = "block";
+      unlockSignOff();
       switchPage(1);
     } else {
       alert("Please ensure at least one equipment row has both an Item description and a Serial Number filled in before proceeding to Page 1 sign-off.");
     }
   }
 
+  function unlockSignOff() {
+    document.getElementById('certSection').className = 'cert-unlocked';
+    document.getElementById('printBtn').disabled = false;
+    document.getElementById('submitCloudBtn').disabled = false;
+    document.getElementById('displayStatusText').innerText = 'Status: Equipment Spreadsheet Verified ✔';
+    document.getElementById('page1Alert').style.display = 'block';
+  }
+
   function syncFormValuesForPrint() {
     const fields = [
       'jobSeq', 'providerName', 'clientName', 'siteLocation', 
       'inspectionDate', 'techName', 'recipientEmail', 'startTime', 'finishTime', 
-      'breakMins', 'travelTime', 'workCarriedOut'
+      'breakMins', 'travelTime', 'workCarriedOut', 'riskAssessmentArea',
+      'riskAssessmentTask', 'riskAssessmentAssessor', 'riskControls', 'riskActions'
     ];
 
     fields.forEach(id => {
@@ -745,26 +1132,173 @@
         }
       });
     });
+
+    document.querySelectorAll('.risk-detail').forEach(panel => {
+      panel.querySelectorAll('input, select, textarea').forEach(field => {
+        const printSpan = field.nextElementSibling;
+        if (printSpan && printSpan.classList.contains('print-val')) {
+          printSpan.innerText = field.tagName === 'SELECT'
+            ? (field.value ? field.options[field.selectedIndex].text : '-')
+            : (field.value.trim() || '-');
+        }
+      });
+      updateRiskScore(panel, 'initial');
+      updateRiskScore(panel, 'residual');
+    });
+  }
+
+  const riskScales = {
+    likelihood: ['Rare', 'Unlikely', 'Possible', 'Likely', 'Almost certain'],
+    consequence: ['Insignificant', 'Minor', 'Moderate', 'Major', 'Severe']
+  };
+
+  function createRiskSelect(panel, index, rating, measure, labelText, scale) {
+    const field = document.createElement('div');
+    field.className = 'risk-field';
+    const id = `risk-${rating}-${measure}-${index}`;
+    const label = document.createElement('label');
+    label.htmlFor = id;
+    label.textContent = labelText;
+    const select = document.createElement('select');
+    select.id = id;
+    select.dataset.rating = rating;
+    select.dataset.measure = measure;
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = 'Select';
+    select.appendChild(placeholder);
+    scale.forEach((description, scaleIndex) => {
+      const option = document.createElement('option');
+      option.value = String(scaleIndex + 1);
+      option.textContent = `${scaleIndex + 1} - ${description}`;
+      select.appendChild(option);
+    });
+    select.addEventListener('change', () => updateRiskScore(panel, rating));
+    const printValue = document.createElement('span');
+    printValue.className = 'print-val';
+    printValue.textContent = '-';
+    field.append(label, select, printValue);
+    return field;
+  }
+
+  function createRiskTextField(panel, index, fieldName, labelText, multiline = false) {
+    const field = document.createElement('div');
+    field.className = `risk-field${fieldName === 'controls' ? ' risk-controls-field' : ''}`;
+    const id = `risk-${fieldName}-${index}`;
+    const label = document.createElement('label');
+    label.htmlFor = id;
+    label.textContent = labelText;
+    const control = document.createElement(multiline ? 'textarea' : 'input');
+    control.id = id;
+    control.dataset.riskField = fieldName;
+    if (!multiline) control.type = 'text';
+    control.addEventListener('input', () => {
+      control.nextElementSibling.textContent = control.value.trim() || '-';
+    });
+    const printValue = document.createElement('span');
+    printValue.className = 'print-val';
+    printValue.textContent = '-';
+    field.append(label, control, printValue);
+    return field;
+  }
+
+  function initRiskRegister() {
+    const register = document.getElementById('riskRegister');
+    const emptyState = document.getElementById('riskEmptyState');
+    const checkboxes = document.querySelectorAll('.risk-option input[type="checkbox"]');
+    const updateEmptyState = () => {
+      emptyState.hidden = Array.from(checkboxes).some(checkbox => checkbox.checked);
+    };
+
+    checkboxes.forEach((checkbox, index) => {
+      const panel = document.createElement('div');
+      panel.className = 'risk-detail';
+      panel.hidden = !checkbox.checked;
+      panel.dataset.riskName = checkbox.value;
+
+      const heading = document.createElement('h4');
+      heading.className = 'risk-detail-heading';
+      heading.textContent = checkbox.value;
+      panel.appendChild(heading);
+
+      ['initial', 'residual'].forEach(rating => {
+        const block = document.createElement('div');
+        block.className = 'risk-rating';
+        const title = document.createElement('h4');
+        title.textContent = rating === 'initial' ? 'Initial Risk' : 'Residual Risk After Controls';
+        const fields = document.createElement('div');
+        fields.className = 'risk-rating-fields';
+        fields.append(
+          createRiskSelect(panel, index, rating, 'likelihood', 'Likelihood', riskScales.likelihood),
+          createRiskSelect(panel, index, rating, 'consequence', 'Consequence', riskScales.consequence)
+        );
+        const score = document.createElement('output');
+        score.className = 'risk-score';
+        score.dataset.score = rating;
+        score.setAttribute('aria-live', 'polite');
+        score.textContent = 'Score: not rated';
+        block.append(title, fields, score);
+        panel.appendChild(block);
+      });
+
+      panel.append(
+        createRiskTextField(panel, index, 'controls', 'Controls / Precautions', true),
+        createRiskTextField(panel, index, 'owner', 'Action Owner')
+      );
+      register.appendChild(panel);
+      checkbox.addEventListener('change', () => {
+        panel.hidden = !checkbox.checked;
+        updateEmptyState();
+      });
+    });
+    updateEmptyState();
+  }
+
+  function calculateRiskRating(likelihood, consequence) {
+    if (!likelihood || !consequence) return null;
+    const score = Number(likelihood) * Number(consequence);
+    const band = score <= 4 ? 'Low' : score <= 9 ? 'Moderate' : score <= 16 ? 'High' : 'Extreme';
+    return { score, band };
+  }
+
+  function updateRiskScore(panel, rating) {
+    const likelihood = panel.querySelector(`[data-rating="${rating}"][data-measure="likelihood"]`).value;
+    const consequence = panel.querySelector(`[data-rating="${rating}"][data-measure="consequence"]`).value;
+    const result = calculateRiskRating(likelihood, consequence);
+    const output = panel.querySelector(`[data-score="${rating}"]`);
+    output.textContent = result ? `Indicative score: ${result.score} (${result.band})` : 'Score: not rated';
+    output.dataset.band = result ? result.band.toLowerCase() : '';
+  }
+
+  function collectRiskEntries() {
+    return Array.from(document.querySelectorAll('.risk-option input:checked')).map(checkbox => {
+      const panel = Array.from(document.querySelectorAll('.risk-detail')).find(item => item.dataset.riskName === checkbox.value);
+      const selectFor = (rating, measure) => panel.querySelector(`[data-rating="${rating}"][data-measure="${measure}"]`);
+      const valueFor = (rating, measure) => selectFor(rating, measure).value;
+      const labelFor = (rating, measure) => {
+        const select = selectFor(rating, measure);
+        return select.value ? select.options[select.selectedIndex].text : '';
+      };
+      const initial = calculateRiskRating(valueFor('initial', 'likelihood'), valueFor('initial', 'consequence'));
+      const residual = calculateRiskRating(valueFor('residual', 'likelihood'), valueFor('residual', 'consequence'));
+      return {
+        hazard: checkbox.value,
+        initialLikelihood: labelFor('initial', 'likelihood'),
+        initialConsequence: labelFor('initial', 'consequence'),
+        initialScore: initial ? `${initial.score} - ${initial.band}` : 'Not rated',
+        controls: panel.querySelector('[data-risk-field="controls"]').value,
+        owner: panel.querySelector('[data-risk-field="owner"]').value,
+        residualLikelihood: labelFor('residual', 'likelihood'),
+        residualConsequence: labelFor('residual', 'consequence'),
+        residualScore: residual ? `${residual.score} - ${residual.band}` : 'Not rated'
+      };
+    });
   }
 
   function submitToCloud() {
     let prefix = document.getElementById('jobPrefix').value;
     let seq = document.getElementById('jobSeq').value.trim();
-
-    let equipmentRows = [];
-    let tbody = document.getElementById('excelTableBody');
-    Array.from(tbody.rows).forEach(row => {
-      equipmentRows.push({
-        item: row.querySelector('.eq-item').value,
-        ser: row.querySelector('.eq-ser').value,
-        lanyard: row.querySelector('.eq-lanyard').value,
-        make: row.querySelector('.eq-make').value,
-        swl: row.querySelector('.eq-swl').value,
-        length: row.querySelector('.eq-length').value,
-        size: row.querySelector('.eq-size').value,
-        legs: row.querySelector('.eq-legs').value
-      });
-    });
+    const equipmentRows = collectEquipmentRows();
 
     let techSigData = document.getElementById('techSigCanvas').toDataURL();
     let clientSigData = document.getElementById('clientSigCanvas').toDataURL();
@@ -783,6 +1317,15 @@
       travelTime: document.getElementById('travelTime').value,
       workCarriedOut: document.getElementById('workCarriedOut').value,
       equipmentRows: equipmentRows,
+      riskAssessment: {
+        siteArea: document.getElementById('riskAssessmentArea').value,
+        task: document.getElementById('riskAssessmentTask').value,
+        assessedBy: document.getElementById('riskAssessmentAssessor').value,
+        assessmentDate: document.getElementById('inspectionDate').value,
+        hazards: collectRiskEntries(),
+        generalControls: document.getElementById('riskControls').value,
+        followUpActions: document.getElementById('riskActions').value
+      },
       techSig: techSigData,
       clientSig: clientSigData
     };
@@ -808,6 +1351,13 @@
           localStorage.setItem(getStorageKey(prefix), num);
         }
       }
+      const drafts = readDrafts();
+      delete drafts[currentDraftId];
+      localStorage.setItem(DRAFTS_STORAGE_KEY, JSON.stringify(drafts));
+      currentDraftId = createDraftId();
+      localStorage.setItem(ACTIVE_DRAFT_STORAGE_KEY, currentDraftId);
+      document.getElementById('draftStatus').textContent = 'Submitted draft cleared from this browser.';
+      location.reload();
     }).catch(err => {
       alert("❌ Error saving to cloud: " + err);
       btn.disabled = false;
@@ -819,12 +1369,236 @@
     return 'machine_job_seq_' + prefix;
   }
 
+  function collectEquipmentRows() {
+    const tbody = document.getElementById('excelTableBody');
+    return Array.from(tbody.rows).map(row => ({
+      item: row.querySelector('.eq-item').value,
+      ser: row.querySelector('.eq-ser').value,
+      lanyard: row.querySelector('.eq-lanyard').value,
+      make: row.querySelector('.eq-make').value,
+      swl: row.querySelector('.eq-swl').value,
+      length: row.querySelector('.eq-length').value,
+      size: row.querySelector('.eq-size').value,
+      legs: row.querySelector('.eq-legs').value,
+      remarks: row.querySelector('.eq-remarks').value,
+      photo: row.dataset.photo || ''
+    }));
+  }
+
+  function restoreEquipmentRows(rows) {
+    const tbody = document.getElementById('excelTableBody');
+    const properties = ['item', 'ser', 'lanyard', 'make', 'swl', 'length', 'size', 'legs', 'remarks'];
+    rows.forEach((data, index) => {
+      const row = tbody.rows[index];
+      properties.forEach(property => {
+        const field = row.querySelector('.eq-' + property);
+        if (field) field.value = data[property] || '';
+      });
+      setEquipmentPhoto(row, data.photo || '');
+    });
+    updateRowNumbers();
+    evaluateSpreadsheet();
+  }
+
+  function readDraft() {
+    try {
+      return readDrafts()[currentDraftId] || null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveDraft() {
+    if (!draftReady) return;
+    const fields = {};
+    document.querySelectorAll('#appSheet input[id], #appSheet select[id], #appSheet textarea[id]').forEach(field => {
+      fields[field.id] = field.type === 'checkbox' ? field.checked : field.value;
+    });
+    const activePage = document.querySelector('.app-page.active-page');
+    const draft = {
+      fields,
+      equipmentRows: collectEquipmentRows(),
+      selectedHazards: Array.from(document.querySelectorAll('.risk-option input:checked')).map(input => input.value),
+      signatures: {
+        technician: document.getElementById('techSigCanvas').toDataURL(),
+        client: document.getElementById('clientSigCanvas').toDataURL()
+      },
+      signOffUnlocked: document.getElementById('certSection').classList.contains('cert-unlocked'),
+      activePage: activePage ? Number(activePage.id.replace('page', '')) : 1,
+      savedAt: new Date().toISOString()
+    };
+
+    try {
+      const drafts = readDrafts();
+      drafts[currentDraftId] = draft;
+      localStorage.setItem(DRAFTS_STORAGE_KEY, JSON.stringify(drafts));
+      localStorage.setItem(ACTIVE_DRAFT_STORAGE_KEY, currentDraftId);
+      document.getElementById('draftStatus').textContent = 'Draft saved in this browser.';
+      renderSavedDrafts();
+    } catch (error) {
+      document.getElementById('draftStatus').textContent = 'Draft could not be saved in this browser.';
+    }
+  }
+
+  function readDrafts() {
+    try {
+      const storedDrafts = localStorage.getItem(DRAFTS_STORAGE_KEY);
+      if (storedDrafts) return JSON.parse(storedDrafts);
+
+      const legacyDraft = localStorage.getItem(LEGACY_DRAFT_STORAGE_KEY);
+      if (!legacyDraft) return {};
+      const draftId = createDraftId();
+      const drafts = { [draftId]: JSON.parse(legacyDraft) };
+      localStorage.setItem(DRAFTS_STORAGE_KEY, JSON.stringify(drafts));
+      localStorage.setItem(ACTIVE_DRAFT_STORAGE_KEY, draftId);
+      localStorage.removeItem(LEGACY_DRAFT_STORAGE_KEY);
+      return drafts;
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function loadActiveDraft() {
+    const drafts = readDrafts();
+    let draftId = localStorage.getItem(ACTIVE_DRAFT_STORAGE_KEY);
+    if (!draftId) {
+      draftId = Object.keys(drafts).sort((left, right) =>
+        (drafts[right].savedAt || '').localeCompare(drafts[left].savedAt || '')
+      )[0] || createDraftId();
+      localStorage.setItem(ACTIVE_DRAFT_STORAGE_KEY, draftId);
+    }
+    return { id: draftId, draft: drafts[draftId] || null };
+  }
+
+  function createDraftId() {
+    return `draft-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  }
+
+  function renderSavedDrafts() {
+    const selector = document.getElementById('savedDraftSelect');
+    if (!selector) return;
+    const drafts = readDrafts();
+    const entries = Object.entries(drafts).sort(([, left], [, right]) =>
+      (right.savedAt || '').localeCompare(left.savedAt || '')
+    );
+    selector.replaceChildren();
+    if (!drafts[currentDraftId]) {
+      const current = document.createElement('option');
+      current.value = currentDraftId;
+      current.textContent = 'Current job (not saved)';
+      selector.appendChild(current);
+    }
+    entries.forEach(([draftId, draft]) => {
+      const fields = draft.fields || {};
+      const jobId = `${fields.jobPrefix || 'H'}${fields.jobSeq || '01'}`;
+      const client = fields.clientName && fields.clientName.trim();
+      const site = fields.siteLocation && fields.siteLocation.trim();
+      const option = document.createElement('option');
+      option.value = draftId;
+      option.textContent = [jobId, client, site].filter(Boolean).join(' | ');
+      selector.appendChild(option);
+    });
+    selector.value = currentDraftId;
+  }
+
+  function loadSavedDraft() {
+    const draftId = document.getElementById('savedDraftSelect').value;
+    if (!draftId || draftId === currentDraftId) return;
+    saveDraft();
+    localStorage.setItem(ACTIVE_DRAFT_STORAGE_KEY, draftId);
+    location.reload();
+  }
+
+  function startNewDraft() {
+    saveDraft();
+    currentDraftId = createDraftId();
+    localStorage.setItem(ACTIVE_DRAFT_STORAGE_KEY, currentDraftId);
+    location.reload();
+  }
+
+  function deleteCurrentDraft() {
+    if (!confirm('Delete this saved job draft? This cannot be undone.')) return;
+    const drafts = readDrafts();
+    delete drafts[currentDraftId];
+    localStorage.setItem(DRAFTS_STORAGE_KEY, JSON.stringify(drafts));
+    currentDraftId = createDraftId();
+    localStorage.setItem(ACTIVE_DRAFT_STORAGE_KEY, currentDraftId);
+    location.reload();
+  }
+
+  function scheduleDraftSave() {
+    if (!draftReady) return;
+    clearTimeout(draftSaveTimer);
+    draftSaveTimer = setTimeout(saveDraft, 300);
+  }
+
+  function setupDraftAutoSave() {
+    document.addEventListener('input', scheduleDraftSave);
+    document.addEventListener('change', scheduleDraftSave);
+    window.addEventListener('beforeunload', saveDraft);
+  }
+
+  function restoreDraft(draft) {
+    Object.entries(draft.fields || {}).forEach(([id, value]) => {
+      const field = document.getElementById(id);
+      if (!field) return;
+      if (field.type === 'checkbox') field.checked = Boolean(value);
+      else field.value = value ?? '';
+    });
+
+    const selectedHazards = new Set(draft.selectedHazards || []);
+    document.querySelectorAll('.risk-option input[type="checkbox"]').forEach(checkbox => {
+      checkbox.checked = selectedHazards.has(checkbox.value);
+      const panel = Array.from(document.querySelectorAll('.risk-detail')).find(item => item.dataset.riskName === checkbox.value);
+      if (panel) panel.hidden = !checkbox.checked;
+    });
+    document.getElementById('riskEmptyState').hidden = selectedHazards.size > 0;
+
+    document.querySelectorAll('.risk-detail').forEach(panel => {
+      updateRiskScore(panel, 'initial');
+      updateRiskScore(panel, 'residual');
+      panel.querySelectorAll('input, select, textarea').forEach(field => {
+        const printValue = field.nextElementSibling;
+        if (printValue && printValue.classList.contains('print-val')) {
+          printValue.textContent = field.tagName === 'SELECT'
+            ? (field.value ? field.options[field.selectedIndex].text : '-')
+            : (field.value.trim() || '-');
+        }
+      });
+    });
+
+    updateHeaderProvider();
+    updateJobIdDisplay();
+    evaluateSpreadsheet();
+    if (draft.signOffUnlocked && isPage2Valid) unlockSignOff();
+    restoreSignature('techSigCanvas', draft.signatures && draft.signatures.technician);
+    restoreSignature('clientSigCanvas', draft.signatures && draft.signatures.client);
+    const page = Number(draft.activePage);
+    switchPage(page >= 1 && page <= 3 ? page : 1);
+    document.getElementById('draftStatus').textContent = 'Draft restored from this browser.';
+  }
+
+  function restoreSignature(canvasId, dataUrl) {
+    if (!dataUrl) return;
+    const canvas = document.getElementById(canvasId);
+    const image = new Image();
+    image.onload = () => canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+    image.src = dataUrl;
+  }
+
   function loadNextSequence(prefix) {
     let lastSeq = localStorage.getItem(getStorageKey(prefix));
     let nextNum = 1;
     if (lastSeq) {
       nextNum = parseInt(lastSeq, 10) + 1;
     }
+    Object.values(readDrafts()).forEach(draft => {
+      const fields = draft.fields || {};
+      const savedNumber = parseInt(fields.jobSeq, 10);
+      if (fields.jobPrefix === prefix && !isNaN(savedNumber)) {
+        nextNum = Math.max(nextNum, savedNumber + 1);
+      }
+    });
     document.getElementById('jobSeq').value = String(nextNum).padStart(2, '0');
   }
 
@@ -888,7 +1662,7 @@
       if (!drawing) return;
       const pos = getPos(e);
       ctx.lineTo(pos.x, pos.y);
-      ctx.strokeStyle = '#17173a';
+      ctx.strokeStyle = '#10243f';
       ctx.lineWidth = 2;
       ctx.lineCap = 'round';
       ctx.stroke();
@@ -896,7 +1670,9 @@
     }
 
     function stopDrop() {
+      if (!drawing) return;
       drawing = false;
+      scheduleDraftSave();
     }
 
     canvas.addEventListener('mousedown', startDraw);
@@ -912,6 +1688,7 @@
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    scheduleDraftSave();
   }
 
   function printCertificate() {
@@ -921,6 +1698,11 @@
 
   function resetForm() {
     if (confirm("Are you sure you want to reset this form?")) {
+      const drafts = readDrafts();
+      delete drafts[currentDraftId];
+      localStorage.setItem(DRAFTS_STORAGE_KEY, JSON.stringify(drafts));
+      currentDraftId = createDraftId();
+      localStorage.setItem(ACTIVE_DRAFT_STORAGE_KEY, currentDraftId);
       location.reload();
     }
   }
@@ -948,14 +1730,34 @@
     XLSX.utils.book_append_sheet(wb, ws1, "Job Details");
 
     // Sheet 2: equipment and tackle
-    var rows = [["#", "Description", "Ser No", "Lanyard", "Make", "SWL / KG", "Length", "Size", "Legs"]];
+    var rows = [["#", "Description", "Ser No", "Lanyard", "Make", "SWL / KG", "Length", "Size", "Legs", "Remarks", "Photo"]];
     (data.equipmentRows || []).forEach(function (r, i) {
       rows.push([i + 1, r.item || "", r.ser || "", r.lanyard || "", r.make || "",
-                 r.swl || "", r.length || "", r.size || "", r.legs || ""]);
+                 r.swl || "", r.length || "", r.size || "", r.legs || "", r.remarks || "", r.photo ? "Attached (see print/PDF)" : ""]);
     });
     var ws2 = XLSX.utils.aoa_to_sheet(rows);
-    ws2["!cols"] = [{ wch: 5 }, { wch: 28 }, { wch: 16 }, { wch: 12 }, { wch: 16 }, { wch: 12 }, { wch: 10 }, { wch: 10 }, { wch: 8 }];
+    ws2["!cols"] = [{ wch: 5 }, { wch: 28 }, { wch: 16 }, { wch: 12 }, { wch: 16 }, { wch: 12 }, { wch: 10 }, { wch: 10 }, { wch: 8 }, { wch: 36 }, { wch: 24 }];
     XLSX.utils.book_append_sheet(wb, ws2, "Equipment");
+
+    var riskRows = [
+      ["Risk Assessment", "Details"],
+      ["Site / Work Area", data.riskAssessmentArea || ""],
+      ["Task / Activity", data.riskAssessmentTask || ""],
+      ["Assessed By", data.riskAssessmentAssessor || ""],
+      ["Assessment Date", data.date || ""],
+      [],
+      ["Applicable Hazard", "Initial Likelihood", "Initial Consequence", "Initial Score", "Controls / Precautions", "Action Owner", "Residual Likelihood", "Residual Consequence", "Residual Score"]
+    ];
+    (data.riskEntries || []).forEach(function (risk) {
+      riskRows.push([risk.hazard, risk.initialLikelihood, risk.initialConsequence, risk.initialScore, risk.controls, risk.owner, risk.residualLikelihood, risk.residualConsequence, risk.residualScore]);
+    });
+    if (!data.riskEntries || data.riskEntries.length === 0) {
+      riskRows.push(["No hazards selected", "", "", "", "", "", "", "", ""]);
+    }
+    riskRows.push([], ["General Site Controls / Notes", data.riskControls || ""], ["Other Site Notes / Follow-up Actions", data.riskActions || ""]);
+    var ws3 = XLSX.utils.aoa_to_sheet(riskRows);
+    ws3["!cols"] = [{ wch: 42 }, { wch: 18 }, { wch: 20 }, { wch: 18 }, { wch: 56 }, { wch: 24 }, { wch: 18 }, { wch: 20 }, { wch: 18 }];
+    XLSX.utils.book_append_sheet(wb, ws3, "Risk Assessment");
 
     XLSX.writeFile(wb, "JobCard_" + (data.jobId || "export") + ".xlsx");
   }
@@ -973,7 +1775,9 @@
           swl: row.querySelector('.eq-swl') ? row.querySelector('.eq-swl').value : '',
           length: row.querySelector('.eq-length') ? row.querySelector('.eq-length').value : '',
           size: row.querySelector('.eq-size') ? row.querySelector('.eq-size').value : '',
-          legs: row.querySelector('.eq-legs') ? row.querySelector('.eq-legs').value : ''
+          legs: row.querySelector('.eq-legs') ? row.querySelector('.eq-legs').value : '',
+          remarks: row.querySelector('.eq-remarks') ? row.querySelector('.eq-remarks').value : '',
+          photo: row.dataset.photo || ''
         });
       });
     }
@@ -990,6 +1794,12 @@
       breakMins: document.getElementById('breakMins') ? document.getElementById('breakMins').value : '',
       travelTime: document.getElementById('travelTime') ? document.getElementById('travelTime').value : '',
       workCarriedOut: document.getElementById('workCarriedOut') ? document.getElementById('workCarriedOut').value : '',
+      riskAssessmentArea: document.getElementById('riskAssessmentArea').value,
+      riskAssessmentTask: document.getElementById('riskAssessmentTask').value,
+      riskAssessmentAssessor: document.getElementById('riskAssessmentAssessor').value,
+      riskEntries: collectRiskEntries(),
+      riskControls: document.getElementById('riskControls').value,
+      riskActions: document.getElementById('riskActions').value,
       equipmentRows: equipmentRows
     };
   }
